@@ -1,0 +1,8 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pkl
+*.pdf
+weather_cache/
+.DS_Store

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Electricity Consumption Forecaster</title>
+  <style>
+    body {
+      background: #f4f7fc;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 430px;
+      background: #fff;
+      margin: 40px auto;
+      padding: 28px 32px 32px 32px;
+      border-radius: 14px;
+      box-shadow: 0px 6px 18px #c6e3ff50;
+      text-align: center;
+    }
+    h2 {
+      margin: 0 0 22px 0;
+      color: #1252ae;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+    form label {
+      font-weight: 600;
+      margin-bottom: 2px;
+      display: block;
+      text-align: left;
+    }
+    form input[type="number"]{
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      border: 1px solid #b5c3d7;
+      background: #f6fbff;
+      font-size: 1em;
+      transition: border 0.15s;
+    }
+    form select {
+      width: 100%; padding: 8px 10px; margin-bottom: 16px; border-radius: 6px;
+      border: 1px solid #b5c3d7; background: #f6fbff; font-size: 1em;
+    }
+    #result.error { background:#fdecea; color:#b3261e; border-color:#f5c2c0; }
+    form input:focus {
+      border-color: #1262df;
+      outline: none;
+    }
+    button {
+      background: linear-gradient(90deg, #2762d0 60%, #32d7c2 100%);
+      color: #fff;
+      padding: 10px 35px;
+      border: none;
+      border-radius: 7px;
+      font-size: 1.13em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0px 2px 8px #187bc761;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: linear-gradient(90deg,#32d7c2,#2762d0);
+    }
+    #result {
+      margin: 28px auto 0 auto;
+      padding: 14px 8px;
+      background: #eafbe6;
+      color: #149334;
+      font-size: 1.17em;
+      font-weight: bold;
+      border-radius: 10px;
+      border: 1px solid #caffe3;
+      letter-spacing: 0.5px;
+      box-shadow: 0px 2px 12px #81f28a20;
+    }
+    #chartBox {
+      margin: 32px auto 2px auto;
+      padding: 12px 8px 0px 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>ML Electricity Prediction</h2>
+    <form id="predictForm">
+      <label>Temperature (normalised 0-1):</label>
+      <input type="number" step="0.01" min="0" max="1" id="Temperature_C" required>
+      <label>Is Weekend:</label>
+      <select id="Is_Weekend"><option value="0">No (0)</option><option value="1">Yes (1)</option></select>
+      <label>Holiday / Event:</label>
+      <select id="Holiday_Event_Flag"><option value="0">No (0)</option><option value="1">Yes (1)</option></select>
+      <label>Lag 1 (0-1):</label>
+      <input type="number" step="0.01" min="0" max="1" id="Lag_1" required>
+      <label>Lag 7 (0-1):</label>
+      <input type="number" step="0.01" min="0" max="1" id="Lag_7" required>
+      <label>Rolling 7 (0-1):</label>
+      <input type="number" step="0.01" min="0" max="1" id="Rolling_7" required>
+      <label>Rolling 14 (0-1):</label>
+      <input type="number" step="0.01" min="0" max="1" id="Rolling_14" required>
+      <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+    <div id="chartBox">
+      <canvas id="predChart" width="370" height="180"></canvas>
+    </div>
+  </div>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    // For charting sequence
+    const labels = [];
+    const predictions = [];
+    const ctx = document.getElementById('predChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Predicted Consumption',
+          data: predictions,
+          borderColor: '#22c1c3',
+          backgroundColor: 'rgba(34, 193, 195, 0.12)',
+          tension: 0.23,
+          fill: true,
+          pointRadius: 3,
+          borderWidth: 2.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display:true } },
+        scales: {
+          x: { title: { display: true, text: 'Prediction Number' } },
+          y: { title: { display: true, text: 'Consumption (kWh)' } }
+        }
+      }
+    });
+
+    document.getElementById('predictForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const payload = {
+        Temperature_C: parseFloat(document.getElementById('Temperature_C').value),
+        Is_Weekend: parseInt(document.getElementById('Is_Weekend').value),
+        Holiday_Event_Flag: parseInt(document.getElementById('Holiday_Event_Flag').value),
+        Lag_1: parseFloat(document.getElementById('Lag_1').value),
+        Lag_7: parseFloat(document.getElementById('Lag_7').value),
+        Rolling_7: parseFloat(document.getElementById('Rolling_7').value),
+        Rolling_14: parseFloat(document.getElementById('Rolling_14').value)
+      };
+      const result = document.getElementById('result');
+      result.classList.remove('error');
+      try {
+        const response = await fetch('http://127.0.0.1:8000/predict', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          // FastAPI validation errors arrive as a 422 with a "detail" list
+          const msg = Array.isArray(data.detail)
+            ? data.detail.map(d => d.loc.slice(-1)[0] + ': ' + d.msg).join('; ')
+            : 'Server error';
+          throw new Error(msg);
+        }
+        result.innerText = 'Predicted Consumption (normalised): ' + data.prediction.toFixed(3);
+        labels.push('P' + (labels.length + 1));
+        predictions.push(data.prediction);
+        chart.update();
+      } catch (err) {
+        result.classList.add('error');
+        result.innerText = (err instanceof TypeError)
+          ? 'Cannot reach the API. Is it running? (uvicorn main:app --port 8000)'
+          : 'Error: ' + err.message;
+      }
+    };
+  </script>
+
+  <!-- Step 2: Embed Dash Analytics Dashboard -->
+  <div style="margin-top:40px;">
+    <h3>Analytics Dashboard</h3>
+    <p>Start it with: <code>streamlit run dashboard.py</code></p>
+    <iframe src="http://127.0.0.1:8501/?embed=true" width="1000" height="800" style="border:none"></iframe>
+  </div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>India Electricity Demand Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070b14;--c:#0d1424;--l:#1b2740;--t:#e6ecf8;--m:#7d8aa5;--cy:#22d3ee;--or:#fb923c;--rd:#f43f5e;--gr:#34d399}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:14px Inter,system-ui,sans-serif}
+.mono,.k b{font-family:'JetBrains Mono',ui-monospace,monospace}
+header{display:flex;align-items:center;gap:14px;padding:12px 22px;border-bottom:1px solid var(--l);flex-wrap:wrap}
+.logo{font-weight:700;letter-spacing:1px}.logo span{color:var(--cy)}.pill{font-size:10px;padding:2px 8px;border-radius:5px;background:#0e3a46;color:var(--cy);font-weight:700}
+.sp{flex:1}.chip{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--m)}
+button{font:inherit;cursor:pointer}.btn{background:linear-gradient(90deg,#0891b2,#22d3ee);color:#041016;border:0;border-radius:8px;padding:8px 14px;font-weight:700}
+nav{display:flex;align-items:center;gap:6px;padding:10px 22px;border-bottom:1px solid var(--l);overflow-x:auto}
+nav button{background:none;border:1px solid transparent;color:var(--m);padding:7px 12px;border-radius:8px;white-space:nowrap}
+nav button.on{background:#0e3a46;color:var(--cy);border-color:#146b80}
+.wrap{display:grid;grid-template-columns:250px 1fr;gap:18px;padding:18px 22px}
+@media(max-width:860px){.wrap{grid-template-columns:1fr}}
+aside label{display:block;font-size:11px;letter-spacing:1px;color:var(--m);margin:16px 0 6px;text-transform:uppercase}
+select{width:100%;background:var(--c);color:var(--t);border:1px solid var(--l);border-radius:8px;padding:10px}
+input[type=range]{width:100%;accent-color:var(--cy)}
+.seg{display:flex;border:1px solid var(--l);border-radius:8px;overflow:hidden}.seg button{flex:1;background:var(--c);border:0;color:var(--m);padding:8px}.seg .on{background:#0e3a46;color:var(--cy)}
+.wi{border:1px solid #6b4a1c;background:#1a140a;border-radius:12px;padding:14px;margin-top:16px}.wi h4{margin:0 0 8px;color:var(--or);font-size:13px}
+.wi .v{float:right;color:var(--or)}.wi p{font-size:12px;color:#d9c9a8;margin:10px 0 0}
+.src{font-size:11px;color:var(--m);margin-top:18px;line-height:1.7}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}@media(max-width:1000px){.grid4{grid-template-columns:repeat(2,1fr)}}
+.card{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:16px}
+.k small{font-size:10px;letter-spacing:1px;color:var(--m);text-transform:uppercase}.k b{display:block;font-size:30px;margin:6px 0}.k b i{font-size:13px;color:var(--m);font-style:normal}
+.k em{font-style:normal;font-size:12px;color:var(--gr)}.k .o{color:var(--or)}
+.tag{float:right;font-size:10px;padding:2px 6px;border-radius:5px;background:#3a2410;color:var(--or)}
+.ch{margin-top:14px}.ch h3{margin:0 0 4px;font-size:16px}.ch p{margin:0 0 10px;color:var(--m);font-size:12px}
+.cv{position:relative;height:340px}.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}@media(max-width:900px){.row2{grid-template-columns:1fr}}
+.tg{float:right}.tg button{background:var(--c);border:1px solid var(--l);color:var(--m);padding:5px 10px}.tg .on{color:var(--cy);border-color:#146b80}
+.bar{margin:12px 0}.bar div{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--or),var(--rd))}.bar span{font-size:12px;display:flex;justify-content:space-between;margin-bottom:5px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cmp div{border:1px solid var(--l);border-radius:10px;padding:12px}.cmp small{color:var(--m);font-size:10px;letter-spacing:1px}.cmp b{display:block;font-size:22px;margin-top:4px}
+table{width:100%;border-collapse:collapse}td,th{padding:9px;border-bottom:1px solid var(--l);text-align:right}th{color:var(--m);font-size:11px;font-weight:600}td:first-child,th:first-child{text-align:left}
+.sr{display:grid;grid-template-columns:150px 1fr 60px;gap:10px;align-items:center;padding:5px;border-radius:6px;cursor:pointer;font-size:12px}.sr:hover{background:#111b30}
+.sr i{display:block;height:8px;border-radius:4px}.pn{display:none}.pn.on{display:block}
+header{align-items:center}.lg{width:34px;height:34px;border:1px solid #146b80;border-radius:8px;display:grid;place-items:center;color:var(--cy)}.mut2{font-size:10px;color:var(--m)}
+.live{font-size:11px;color:var(--gr);border:1px solid #14532d;background:#0a2018;border-radius:14px;padding:3px 10px}.chip b{font-size:13px}.chip{line-height:1.3;font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.lgd{font-size:11px;color:var(--m);display:flex;align-items:center;gap:5px;white-space:nowrap}.lgd i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.bdg{font-size:10px;margin-left:6px;padding:1px 6px;border-radius:4px;background:#3a2410;color:var(--or)}.tag2{float:right;font-size:10px;padding:2px 7px;border-radius:5px;background:#0e3a46;color:var(--cy);letter-spacing:0;text-transform:none}
+.tk{display:flex;justify-content:space-between;font-size:10px;color:var(--m)}.tag.g{background:#0a2018;color:var(--gr)}.ac{background:#241a08;border:1px solid #6b4a1c;border-radius:8px;padding:10px;font-size:12px;color:#e7d3a8;margin-top:12px}
+.dv{background:#2a1d08;color:var(--or);padding:2px 8px;border-radius:6px;font-size:12px}.wh{display:flex;gap:10px;align-items:center}.wh small{display:block;color:var(--m);font-size:10px}
+.rng{float:right;margin-left:8px;font-size:11px;padding:4px 8px;border:1px solid var(--l);border-radius:6px;color:var(--m)}.pkc{display:inline-block;margin-top:8px;font-size:12px;padding:3px 8px;border-radius:6px;background:#2a0f16;color:#f43f5e;border:1px solid #5c1a28}
+footer{display:flex;gap:16px;flex-wrap:wrap}footer{padding:16px 22px;color:var(--m);font-size:11px;border-top:1px solid var(--l)}
+</style></head><body>
+<header><div class="lg">⚡</div><div><div class="logo">INDIA<span>·DEMAND</span></div><div class="mut2">Electricity Demand Forecasting &amp; Weather Impact Engine</div></div><span class="pill">INTELLIGENCE</span><span class="live">● Monthly Grid-India data</span><div class="sp"></div>
+<div class="chip">Selected node<br><b id="node" style="color:var(--t)"></b></div><div class="chip">Model<br><b style="color:var(--t)">Growth blend + GBM</b></div><div class="chip" id="asof"></div><button class="btn" id="exp">Export CSV</button></header>
+<nav id="tabs"><button data-t="0" class="on">Demand Forecast</button><button data-t="1">Seasonality &amp; Weather</button><button data-t="2">Accuracy &amp; Backtest<span class="bdg" id="mp"></span></button><button data-t="3">All <span id="ns"></span> States &amp; UTs</button><div class="sp"></div><span class="lgd"><i style="background:#22d3ee"></i>Historical (Actual)</span><span class="lgd"><i style="background:#fb923c"></i>Forecast (<span id="fs"></span>+)</span><span class="lgd"><i style="background:rgba(251,146,60,.45)"></i>80% range</span><button data-t="4">Methodology &amp; Data</button></nav>
+<div class="wrap"><aside>
+<label>State / Union Territory<span class="tag2" id="rg"></span></label><select id="sel"></select>
+<label>Forecast horizon<span class="tag2 mono" id="hzv"></span></label><input type="range" id="hz" min="3" max="12" value="12"><div class="tk"><span>3M</span><span>12M</span></div>
+<label>Demand unit</label><div class="seg" id="un"><button data-u="t" class="on">Total (MU)</button><button data-u="d">Daily (MU/day)</button></div>
+<div class="wi"><div class="wh"><div style="font-size:20px">🌡</div><div><h4 style="margin:0;color:var(--t)">Weather What-If Engine</h4><small>Simulate climate stress</small></div><span class="tag" id="wst" style="margin-left:auto"></span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:12px"><span>Temperature Δ vs last year</span><span class="dv mono" id="dtv"></span></div><input type="range" id="dt" min="-3" max="3" step="0.5" value="0" style="margin-top:8px">
+<div class="tk"><span>-3.0 °C (Cooler)</span><span>Normal</span><span>+3.0 °C (Heatwave)</span></div><div class="ac" id="wip"></div></div><div class="src">SOURCE DATA: Grid-India monthly reports<br>COVERAGE: <span id="cov"></span><br>WEATHER: Open-Meteo (CC BY 4.0), one city per state</div></aside>
+<main>
+<section class="pn on"><div class="grid4">
+<div class="card k"><small>Latest actual</small><b id="k1"></b><em id="k1d"></em> <svg id="spk" width="64" height="20" style="float:right"></svg></div>
+<div class="card k"><span class="tag">T+1 TARGET</span><small>Forecast</small><b class="o" id="k2"></b><em id="k2d" style="color:var(--m)"></em></div>
+<div class="card k"><small>Next 12M cumulative</small><b id="k3" style="color:var(--cy)"></b><em id="k3d"></em><div class="mut2" id="k3b" style="margin-top:4px"></div></div>
+<div class="card k"><span class="tag g" id="rel"></span><small>Model error (1-month)</small><b id="k4"></b><em id="k4d" style="color:var(--m)"></em></div></div>
+<div class="card ch"><span class="rng" id="rng"></span><div class="tg" id="md"><button data-m="line" class="on">Line + Fan</button><button data-m="bar">Bars</button><button data-m="yoy">YoY %</button></div><h3 id="ct"></h3><p>Actual monthly energy met, forecast, and 80% likely range</p><div class="cv"><canvas id="c1"></canvas></div><span class="pkc" id="pk"></span></div>
+<div class="row2"><div class="card"><h3 style="margin:0"><span class="tag2" id="rg2"></span>Seasonal demand profile</h3><p style="color:var(--m);font-size:12px">Average daily demand by season (history)</p><div id="sea"></div><p class="mut2" id="sf" style="margin-top:10px"></p></div>
+<div class="card"><h3 style="margin:0"><span class="tag" id="sg"></span>Scenario sensitivity breakdown</h3><p style="color:var(--m);font-size:12px" id="scp"></p><div class="cmp"><div><small>BASELINE</small><b class="mono" id="bs"></b><small class="mut2">Weather as last year</small></div><div><small>WHAT-IF ADJUSTED</small><b class="mono" id="wf" style="color:var(--or)"></b><small id="inc" class="mut2"></small></div></div></div></div></section>
+<section class="pn"><div class="card"><h3 style="margin:0 0 8px">Demand by month, one line per year</h3><div class="cv"><canvas id="c2"></canvas></div></div>
+<div class="card ch"><h3 style="margin:0 0 8px">Daily demand vs average temperature</h3><div class="cv"><canvas id="c3"></canvas></div><p style="margin-top:8px">One representative city per state; a rough proxy.</p></div></section>
+<section class="pn"><div class="card"><h3 style="margin:0 0 8px">Typical forecast error by horizon</h3><table id="acc"></table><p style="color:var(--m);font-size:12px">Each month from Jan 2025 forecast as if unknown, using only earlier data. Longer horizons have fewer test months.</p></div>
+<div class="card ch"><h3 style="margin:0 0 8px">Forecasts made 1 month ahead vs actual</h3><div class="cv"><canvas id="c4"></canvas></div></div></section>
+<section class="pn"><div class="card"><h3 style="margin:0 0 8px">Forecast growth: next 12M vs last 12M (click a state)</h3><div id="all"></div></div></section>
+<section class="pn"><div class="card" style="line-height:1.7"><h3 style="margin-top:0">Methodology &amp; data</h3>
+<p><b>Data.</b> Grid-India (NLDC) Monthly Operational Reports, <span id="cov2"></span>. Demand is energy met (MU). Credit: Weather data by Open-Meteo.com.</p>
+<p><b>Method.</b> Average of (a) same month last year × recent year-on-year growth and (b) a gradient-boosting model of that growth. Ranges are the 80th-percentile backtest error at each horizon.</p>
+<p><b>What-if.</b> For Apr–Sep, +1 °C vs last year went with about <span id="s1"></span>% more demand across states (95% interval <span id="s2"></span>). No effect was detectable Oct–Mar.</p>
+<p><b>Limits.</b> About 4 years of monthly data; small states are noisy; beyond ~5 months ahead the model is no better than last year × growth. Not an official forecast.</p></div></section>
+</main></div><footer><span>Data: Grid-India monthly reports</span><span>Weather: Open-Meteo (CC BY 4.0)</span><span>Independent project, not affiliated with Grid-India</span><span style="margin-left:auto">v1.0</span></footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const D=__DATA__,$=i=>document.getElementById(i),M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const S={e:'Delhi',hz:12,u:'t',dT:0,m:'line'},CH={},fmt=(x,d=0)=>x==null?'–':x.toLocaleString('en-IN',{maximumFractionDigits:d});
+const dim=ym=>new Date(+ym.slice(0,4),+ym.slice(5,7),0).getDate(),lab=ym=>M[+ym.slice(5,7)-1]+" '"+ym.slice(2,4);
+const hot=ym=>{const m=+ym.slice(5,7);return m>=4&&m<=9},eff=ym=>hot(ym)?D.sens.h.p/100*S.dT:0,E=()=>D.ents[S.e];
+const col={y:'#7d8aa5',g:'rgba(125,138,165,.15)'},opt=(t)=>({responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:col.y,boxWidth:10}},tooltip:{backgroundColor:'#0b1220',borderColor:'#6b4a1c',borderWidth:1,titleColor:'#fb923c',bodyColor:'#e6ecf8'}},scales:{x:{ticks:{color:col.y,maxTicksLimit:10},grid:{color:col.g},title:{display:!!(t&&t.x),text:t&&t.x,color:col.y}},y:{ticks:{color:col.y},grid:{color:col.g},title:{display:!!(t&&t.y),text:t&&t.y,color:col.y}}}});
+const FL={id:'fl',afterDraw(c){if(c.canvas.id!='c1'||S.m=='yoy')return;const x=c.scales.x.getPixelForValue(D.hm.length-1),y=c.chartArea,g=c.ctx;g.save();g.setLineDash([4,4]);g.strokeStyle='#fb923c';g.beginPath();g.moveTo(x,y.top);g.lineTo(x,y.bottom);g.stroke();g.fillStyle='#fb923c';g.font='10px sans-serif';g.fillText(lab(D.hm[D.hm.length-1]),x-14,y.bottom+14);g.restore()}};
+function mk(id,cfg){cfg.plugins=[FL];if(CH[id])CH[id].destroy();CH[id]=new Chart($(id),cfg)}
+function render(){const e=E(),all=[...D.hm,...D.fm],sc=(v,ym)=>v==null?null:S.u=='d'?v/dim(ym):v,n=D.hm.length,f=D.fm.slice(0,S.hz);
+$('node').textContent=S.e+' ('+D.reg[S.e]+')';$('rg').textContent=D.reg[S.e]+(S.e=='ALL INDIA'?'':' Region');$('rg2').textContent=D.reg[S.e];$('ns').textContent=D.nstates;$('wst').textContent=S.dT?'ACTIVE':'IDLE';$('hzv').textContent=S.hz+' Months';$('dtv').textContent=(S.dT>=0?'+':'')+S.dT.toFixed(1)+' °C';
+const adj=f.map((ym,i)=>e.f[i]*(1+eff(ym))),lo=f.map((ym,i)=>e.lo[i]*(1+eff(ym))),hi=f.map((ym,i)=>e.hi[i]*(1+eff(ym)));
+const li=n-1,lat=e.h[li],ly=e.h[li-12],yo=ly?(lat/ly-1)*100:null,u=S.u=='d'?' MU/day':' MU';
+$('k1').innerHTML=fmt(sc(lat,D.hm[li]),S.u=='d'?1:0)+'<i>'+u+'</i>';$('k1d').textContent=(yo>=0?'▲ ':'▼ ')+fmt(yo,1)+'% vs a year earlier';
+$('k2').innerHTML=fmt(sc(adj[0],f[0]),S.u=='d'?1:0)+'<i>'+u+'</i>';$('k2d').textContent=lab(f[0])+' · range '+fmt(sc(lo[0],f[0]))+' to '+fmt(sc(hi[0],f[0]));
+const t12=e.f.reduce((a,v,i)=>a+v*(1+eff(D.fm[i])),0),b12=e.f.reduce((a,v)=>a+v,0);
+$('k3').innerHTML=fmt(t12/1000,1)+'<i> BU</i>';$('k3d').textContent=((t12/e.l12-1)*100>=0?'▲ ':'▼ ')+fmt((t12/e.l12-1)*100,1)+'% vs last 12 months';
+const er=e.acc[0][0];$('k4').innerHTML=fmt(er,1)+'<i>% MAPE</i>';$('mp').textContent=fmt(er,1)+'%';$('rel').textContent=(er<5?'GOOD':er<8?'MODERATE':'LOW')+' ACCURACY';$('k3b').textContent=fmt(b12/1000,1)+' BU baseline (weather as last year)';$('fs').textContent=lab(D.fm[0]);$('rng').textContent=lab(D.hm[0])+' – '+lab(f[f.length-1]);{const v=e.h.slice(-12).filter(x=>x!=null),a=Math.min(...v),b=Math.max(...v);$('spk').innerHTML='<polyline fill="none" stroke="#34d399" stroke-width="1.5" points="'+v.map((x,i)=>(i*64/(v.length-1)).toFixed(1)+','+(18-(x-a)/(b-a||1)*16).toFixed(1)).join(' ')+'"/>'}$('k4d').textContent='Backtest, '+e.acc[0][2]+' test months · '+(er<5?'good':er<8?'moderate':'low')+' accuracy';
+$('ct').textContent=S.e+': Monthly Energy Met & Forecast';
+const bar=S.m=='bar',pad=a=>[...Array(n).fill(null),...a];
+const ds=[{label:'Actual',data:[...e.h.map((v,i)=>sc(v,D.hm[i])),...Array(f.length).fill(null)],borderColor:'#22d3ee',backgroundColor:'#22d3ee',type:bar?'bar':'line',pointRadius:2,tension:.2},
+{label:'Upper (80%)',data:pad(hi.map((v,i)=>sc(v,f[i]))),borderWidth:0,pointRadius:0,backgroundColor:'rgba(251,146,60,.18)',fill:'+1',hidden:bar},
+{label:'Lower (80%)',data:pad(lo.map((v,i)=>sc(v,f[i]))),borderWidth:0,pointRadius:0,fill:false,hidden:bar},
+{label:'Forecast',data:[...Array(n-1).fill(null),sc(lat,D.hm[li]),...f.map((ym,i)=>sc(e.f[i],ym))],borderColor:'#fb923c',backgroundColor:'#fb923c',borderDash:[6,4],type:bar?'bar':'line',pointRadius:3,tension:.2}];
+if(S.dT!=0)ds.push({label:'What-if '+(S.dT>0?'+':'')+S.dT+' °C',data:[...Array(n).fill(null),...f.map((ym,i)=>sc(adj[i],ym))],borderColor:'#f43f5e',backgroundColor:'#f43f5e',pointRadius:3,tension:.2,type:bar?'bar':'line'});
+if(S.m=='yoy'){const yv=[...e.h.map((v,i)=>i>=12&&v!=null&&e.h[i-12]?(v/e.h[i-12]-1)*100:null),...f.map((ym,i)=>(adj[i]/e.h[n-12+i]-1)*100)];ds.length=0;ds.push({label:'YoY growth %',type:'bar',data:yv,backgroundColor:yv.map((v,i)=>i>=n?'#fb923c':v>=0?'#22d3ee':'#f43f5e')})}
+mk('c1',{type:'line',data:{labels:[...D.hm,...f].map(lab),datasets:ds},options:opt({y:S.m=='yoy'?'YoY growth (%)':S.u=='d'?'MU per day':'MU per month'})});
+const pi=adj.indexOf(Math.max(...adj));$('pk').textContent='Peak demand month: '+lab(f[pi])+' (~'+fmt(sc(adj[pi],f[pi]))+u+')';
+const sea=[['Monsoon peak (Jun–Sep)',[6,7,8,9]],['Pre-monsoon (Apr–May)',[4,5]],['Winter (Nov–Feb)',[11,12,1,2]]].map(([k,ms])=>{const v=D.hm.map((ym,i)=>[ym,e.h[i]]).filter(([ym,x])=>x!=null&&ms.includes(+ym.slice(5,7))).map(([ym,x])=>x/dim(ym));return[k,Math.min(...v),Math.max(...v),v.reduce((a,b)=>a+b,0)/v.length]}),mx=Math.max(...sea.map(s=>s[3]));
+$('sea').innerHTML=sea.map(s=>`<div class="bar"><span><b>${s[0]}</b><span class="mono">${fmt(s[1],1)} – ${fmt(s[2],1)} MU/day</span></span><div style="width:${s[3]/mx*100}%"></div></div>`).join('');
+{const ad=f.map((ym,i)=>e.f[i]*eff(ym)).filter((x,i)=>hot(f[i])),pc=sh=>sh;$('sg').textContent=(D.sens.h.p*S.dT>=0?'+':'')+fmt(D.sens.h.p*S.dT,1)+'% Apr–Sep shift';$('inc').textContent=(t12>=b12?'+':'')+fmt((t12-b12)/1000,1)+' BU incremental strain';$('sf').textContent='Monsoon vs winter: ×'+fmt(sea[0][3]/sea[2][3],1)+' average daily demand';$('wip').innerHTML=ad.length?'<b>Cooling impact:</b> adds approx. '+(ad.reduce((a,b)=>a+b,0)/ad.length>=0?'+':'')+fmt(ad.reduce((a,b)=>a+b,0)/ad.length)+' MU/mo in Apr–Sep months ('+(D.sens.h.p*S.dT>=0?'+':'')+fmt(D.sens.h.p*S.dT,1)+'% base shift; 95% interval '+fmt(D.sens.h.lo*S.dT,1)+'% to '+fmt(D.sens.h.hi*S.dT,1)+'%). Oct–Mar unchanged.':'No Apr–Sep months in view: no measurable temperature effect Oct–Mar.'}$('scp').textContent='Baseline vs '+(S.dT>=0?'+':'')+S.dT.toFixed(1)+' °C in Apr–Sep months';$('bs').textContent=fmt(b12/1000,1)+' BU';$('wf').textContent=fmt(t12/1000,1)+' BU';
+// seasonality & weather
+const yrs=[...new Set(D.hm.map(y=>y.slice(0,4)))],pal=['#7d8aa5','#22d3ee','#fb923c','#34d399','#f43f5e'];
+mk('c2',{type:'line',data:{labels:M,datasets:yrs.map((y,k)=>({label:y,borderColor:pal[k%5],data:M.map((_,m)=>{const i=D.hm.indexOf(y+'-'+String(m+1).padStart(2,'0'));return i<0?null:sc(e.h[i],D.hm[i])}),tension:.2,pointRadius:2}))},options:opt({y:S.u=='d'?'MU per day':'MU per month'})});
+mk('c3',{type:'scatter',data:{datasets:[{label:'Apr–Sep',backgroundColor:'#fb923c',data:[]},{label:'Oct–Mar',backgroundColor:'#22d3ee',data:[]}]},options:opt({x:'Avg temperature (°C)',y:'MU per day'})});
+D.hm.forEach((ym,i)=>{if(e.h[i]!=null&&e.t[i]!=null)CH.c3.data.datasets[hot(ym)?0:1].data.push({x:e.t[i],y:e.h[i]/dim(ym)})});CH.c3.update();
+// accuracy
+$('acc').innerHTML='<tr><th>Months ahead</th><th>This model error</th><th>Same month last year</th><th>Test months</th></tr>'+e.acc.map((r,i)=>`<tr><td>${[1,3,6,12][i]}</td><td class="mono">${fmt(r[0],1)}%</td><td class="mono">${fmt(r[1],1)}%</td><td>${r[2]}</td></tr>`).join('');
+mk('c4',{type:'line',data:{labels:D.bm.map(lab),datasets:[{label:'Actual',data:e.ba,borderColor:'#22d3ee',pointRadius:2},{label:'Forecast 1 month earlier',data:e.bp,borderColor:'#fb923c',borderDash:[6,4],pointRadius:2}]},options:opt({y:'MU per month'})});
+}
+function allList(){const r=Object.entries(D.ents).filter(([k])=>k!='ALL INDIA').map(([k,v])=>[k,(v.n12/v.l12-1)*100]).sort((a,b)=>b[1]-a[1]),mx=Math.max(...r.map(x=>Math.abs(x[1])));
+$('all').innerHTML=r.map(([k,g])=>`<div class="sr" data-k="${k}"><span>${k}</span><i style="width:${Math.abs(g)/mx*100}%;background:${g>=0?'#22d3ee':'#f43f5e'}"></i><span class="mono">${g>=0?'+':''}${g.toFixed(1)}%</span></div>`).join('')}
+$('sel').innerHTML=Object.keys(D.ents).map(k=>`<option>${k}</option>`).join('');$('sel').value=S.e;
+$('sel').onchange=e=>{S.e=e.target.value;render()};$('hz').oninput=e=>{S.hz=+e.target.value;render()};$('dt').oninput=e=>{S.dT=+e.target.value;render()};
+$('un').onclick=e=>{if(e.target.dataset.u){S.u=e.target.dataset.u;[...$('un').children].forEach(b=>b.classList.toggle('on',b==e.target));render()}};
+$('md').onclick=e=>{if(e.target.dataset.m){S.m=e.target.dataset.m;[...$('md').children].forEach(b=>b.classList.toggle('on',b==e.target));render()}};
+$('tabs').onclick=e=>{if(e.target.dataset.t){document.querySelectorAll('.pn').forEach((p,i)=>p.classList.toggle('on',i==e.target.dataset.t));[...$('tabs').children].forEach(b=>b.classList.toggle('on',b==e.target));render()}};
+$('all').onclick=e=>{const r=e.target.closest('.sr');if(r){S.e=r.dataset.k;$('sel').value=S.e;document.querySelector('#tabs button').click()}};
+$('exp').onclick=()=>{const e=E(),c='month,forecast_mu,low_mu,high_mu\n'+D.fm.map((m,i)=>[m,e.f[i],e.lo[i],e.hi[i]].join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c]));a.download='forecast_'+S.e.replace(/\W+/g,'_')+'.csv';a.click()};
+const cov=lab(D.hm[0])+' to '+lab(D.hm[D.hm.length-1]);$('cov').textContent=cov;$('cov2').textContent=cov+' (Jan 2023 missing)';$('asof').textContent='Data through '+lab(D.hm[D.hm.length-1]);
+$('s1').textContent=D.sens.h.p.toFixed(1);$('s2').textContent=D.sens.h.lo.toFixed(1)+'% to '+D.sens.h.hi.toFixed(1)+'%';allList();render();
+</script></body></html>

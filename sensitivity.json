@@ -1,0 +1,14 @@
+{
+  "hot_apr_sep": {
+    "pct_per_degC": 3.33,
+    "ci_low": 1.17,
+    "ci_high": 5.48,
+    "n": 396
+  },
+  "cool_oct_mar": {
+    "pct_per_degC": -0.03,
+    "ci_low": -1.7,
+    "ci_high": 1.63,
+    "n": 297
+  }
+}
